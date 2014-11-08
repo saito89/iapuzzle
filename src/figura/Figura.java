@@ -51,11 +51,11 @@ public class Figura{
         zona z3 = new zona();
         zona z4 = new zona();
         zona z5 = new zona();
-        z1.setPosition(8);
+        z1.setPosition(4);
         z2.setPosition(-2);
-        z3.setPosition(0);
+        z3.setPosition(2);
         z4.setPosition(-1);
-        z5.setPosition(12);
+        z5.setPosition(6);
         ArrayList<zona> listZona = new ArrayList<>();
         listZona.add(z0);
         listZona.add(z1);
@@ -70,6 +70,9 @@ public class Figura{
         System.out.println("Medium: " + or.getMedium());
         System.out.println("Higher: " + or.getHigher());
         
+        System.out.println("Heuristic: " + ae.heuristic(or));
+        
+        ae.bestMovement(or, listZona);
     }
     
     
