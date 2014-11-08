@@ -73,6 +73,7 @@ public class Figura{
         System.out.println("Heuristic: " + ae.heuristic(or));
         
         ae.bestMovement(or, listZona);
+        //Este mae!!
     }
     
     
