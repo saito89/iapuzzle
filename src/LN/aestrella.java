@@ -63,44 +63,119 @@ public class aestrella {
         } 
     }
     
-    public Route bestMovement(Order order, ArrayList<Zona> listZona, ArrayList<BestMovement> listMovement){
+    public void restoreListZonaTemp(ArrayList<Zona> listZonaTemp, ArrayList<Zona> listZona){
+        listZonaTemp.get(1).setPosition(listZona.get(1).getPosition());
+        listZonaTemp.get(3).setPosition(listZona.get(3).getPosition());
+        listZonaTemp.get(5).setPosition(listZona.get(5).getPosition());
+    }
+    
+    public void setNewCandidate(BestMovement bm, Order orTemp, ArrayList<Zona> listZona, ArrayList<Zona> listZonaTemp, Route route, ArrayList<BestMovement> listMovement){
+        bm.setZona(1);
+        bm.setDirection(-1);
+        route.setListBestMovement(listMovement);
+        System.out.println("Candidato con Heuristic = " + heuristic(orTemp) + " fue elegido!");
+    }
+    
+    public void setChosenSon(BestMovement bm, ArrayList<Zona> listZona, ArrayList<Zona> listZonaTemp){
+        int zone = bm.getZona();
+        int dir = bm.getDirection();
+        
+        if(zone == 1){
+            listZona.get(1).setPosition(listZonaTemp.get(1).getPosition() + dir);
+            listZona.get(5).setPosition(listZonaTemp.get(5).getPosition() + dir);
+        }
+        
+        else if(zone == 3){
+            listZona.get(3).setPosition(listZonaTemp.get(3).getPosition() + dir);
+            listZona.get(1).setPosition(listZonaTemp.get(1).getPosition() + 1);
+        }
+        
+         else if(zone == 5){
+            listZona.get(5).setPosition(listZonaTemp.get(5).getPosition() + dir);
+            listZona.get(3).setPosition(listZonaTemp.get(3).getPosition() + 1);
+        }
+    }
+    
+    public Route bestMovement(Order order, ArrayList<Zona> listZona, ArrayList<Zona> listZonaTemp, ArrayList<BestMovement> listMovement){
         Route route = new Route();
         BestMovement bm = new BestMovement();
-        ArrayList<Zona> listZonaTemp = (ArrayList<Zona>)listZona.clone();
         Order or = calculateOrder(listZona);
         int actualHeuristic = heuristic(or);
-        System.out.println("Posicion Actual: " + listZona.get(1).getPosition() + " " + listZona.get(3).getPosition() + " " + listZona.get(5).getPosition());
-        
-        for(int i = 1; i <= 5; i++){
-
-            //Mover a la izquierda
-            if(i == 1){
-                listZonaTemp.get(1).setPosition(listZonaTemp.get(1).getPosition() - 1);
-                listZonaTemp.get(5).setPosition(listZonaTemp.get(5).getPosition() - 1);
-                Order orTemp = calculateOrder(listZonaTemp);
-                if(heuristic(orTemp) < actualHeuristic){
-                    bm.setZona(1);
-                    bm.setDirection(-1);
-                    actualHeuristic = heuristic(orTemp);
-                    route.setListBestMovement(listMovement);
-                    route.setListZona(listZonaTemp);
-                    route.setOrd(orTemp);
-                }
-                else{
-                    System.out.println("Aqui deberia de despicharze");
-                }
-            }
-            //listZonaTemp.get(i).setPosition(listZonaTemp.get(i).getPosition() - 1);
-        }
-        System.out.println("Aqui va el or");
-        System.out.println("Higher:" + or.getHigher() + "Medium:" + or.getMedium() + "Minor" + or.getMinor());
-        
+        System.out.println("\n<==== CALCULO DE HIJOS ====> \n");
+        System.out.print("Posicion Actual: " + listZona.get(1).getPosition() + " " + listZona.get(3).getPosition() + " " + listZona.get(5).getPosition());
+        System.out.println(" - Heuristic:" + actualHeuristic);
+        //Mover ZONA 1 a la Izquierda
+        System.out.println("Hijo Zona 1 Izquierda");
+        listZonaTemp.get(1).setPosition(listZona.get(1).getPosition() - 1);
+        listZonaTemp.get(5).setPosition(listZona.get(5).getPosition() - 1);
+        Order orTemp = calculateOrder(listZonaTemp);
         printSon(listZonaTemp);
+        if(heuristic(orTemp) < actualHeuristic){
+            setNewCandidate(bm, orTemp, listZona, listZonaTemp, route, listMovement);
+            actualHeuristic = heuristic(orTemp);
+        }
+        restoreListZonaTemp(listZonaTemp, listZona);
+        //Mover ZONA 1 a la Derecha
+        System.out.println("Hijo Zona 1 Derecha");
+        listZonaTemp.get(1).setPosition(listZona.get(1).getPosition() + 1);
+        listZonaTemp.get(5).setPosition(listZona.get(5).getPosition() + 1);
+        orTemp = calculateOrder(listZonaTemp);
+        printSon(listZonaTemp);
+        if(heuristic(orTemp) < actualHeuristic){
+            setNewCandidate(bm, orTemp, listZona, listZonaTemp, route, listMovement);
+            actualHeuristic = heuristic(orTemp);
+        }
+        //Mover ZONA 3 a la Izquierda
+        restoreListZonaTemp(listZonaTemp, listZona);
+        System.out.println("Hijo Zona 3 Izquierda");
+        listZonaTemp.get(3).setPosition(listZona.get(3).getPosition() - 1);
+        listZonaTemp.get(1).setPosition(listZona.get(1).getPosition() - 1);
+        orTemp = calculateOrder(listZonaTemp);
+        printSon(listZonaTemp);
+        if(heuristic(orTemp) < actualHeuristic){
+            setNewCandidate(bm, orTemp, listZona, listZonaTemp, route, listMovement);
+            actualHeuristic = heuristic(orTemp);
+        }
+        //Mover ZONA 3 a la Derecha
+        restoreListZonaTemp(listZonaTemp, listZona);
+        System.out.println("Hijo Zona 3 Derecha");
+        listZonaTemp.get(3).setPosition(listZona.get(3).getPosition() + 1);
+        listZonaTemp.get(1).setPosition(listZona.get(1).getPosition() + 1);
+        orTemp = calculateOrder(listZonaTemp);
+        printSon(listZonaTemp);
+        if(heuristic(orTemp) < actualHeuristic){
+            setNewCandidate(bm, orTemp, listZona, listZonaTemp, route, listMovement);
+            actualHeuristic = heuristic(orTemp);
+        }
+        //Mover ZONA 5 a la Izquierda
+        restoreListZonaTemp(listZonaTemp, listZona);
+        System.out.println("Hijo Zona 5 Izquierda");
+        listZonaTemp.get(5).setPosition(listZona.get(5).getPosition() - 1);
+        listZonaTemp.get(3).setPosition(listZona.get(3).getPosition() - 1);
+        orTemp = calculateOrder(listZonaTemp);
+        printSon(listZonaTemp);
+        if(heuristic(orTemp) < actualHeuristic){
+            setNewCandidate(bm, orTemp, listZona, listZonaTemp, route, listMovement);
+            actualHeuristic = heuristic(orTemp);
+        }
+        
+        //Mover ZONA 5 a la Izquierda
+        restoreListZonaTemp(listZonaTemp, listZona);
+        System.out.println("Hijo Zona 5 Derecha");
+        listZonaTemp.get(5).setPosition(listZona.get(5).getPosition() + 1);
+        listZonaTemp.get(3).setPosition(listZona.get(3).getPosition() + 1);
+        orTemp = calculateOrder(listZonaTemp);
+        printSon(listZonaTemp);
+        if(heuristic(orTemp) < actualHeuristic){
+            setNewCandidate(bm, orTemp, listZona, listZonaTemp, route, listMovement);
+            actualHeuristic = heuristic(orTemp);
+        }
+
+        setChosenSon(bm, listZona, listZonaTemp);
         
         listMovement.add(bm);
         
-        printMovementList(listMovement);
-        
+        //System.out.println("Higher:" + or.getHigher() + "Medium:" + or.getMedium() + "Minor" + or.getMinor());
         return route;
     } 
 }
