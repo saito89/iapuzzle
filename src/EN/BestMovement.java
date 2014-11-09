@@ -10,7 +10,7 @@ package EN;
  *
  * @author Cana
  */
-public class bestMovement {
+public class BestMovement {
     private int zona;
     private int direction;
 

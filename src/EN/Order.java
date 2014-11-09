@@ -10,7 +10,7 @@ package EN;
  *
  * @author Cana
  */
-public class order {
+public class Order {
     private int minor;
     private int medium;
     private int higher;

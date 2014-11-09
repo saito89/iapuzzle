@@ -45,18 +45,18 @@ public class Figura{
         jf.setLocationRelativeTo(null);
         jf.setVisible(true);*/
         aestrella ae = new aestrella();
-        zona z0 = new zona();
-        zona z1 = new zona();
-        zona z2 = new zona();
-        zona z3 = new zona();
-        zona z4 = new zona();
-        zona z5 = new zona();
+        Zona z0 = new Zona();
+        Zona z1 = new Zona();
+        Zona z2 = new Zona();
+        Zona z3 = new Zona();
+        Zona z4 = new Zona();
+        Zona z5 = new Zona();
         z1.setPosition(4);
         z2.setPosition(-2);
         z3.setPosition(2);
         z4.setPosition(-1);
         z5.setPosition(6);
-        ArrayList<zona> listZona = new ArrayList<>();
+        ArrayList<Zona> listZona = new ArrayList<>();
         listZona.add(z0);
         listZona.add(z1);
         listZona.add(z2);
@@ -64,15 +64,23 @@ public class Figura{
         listZona.add(z4);
         listZona.add(z5);
         
-        order or = ae.calculateOrder(listZona);
+        Order or = ae.calculateOrder(listZona);
         
+        /*Prueba de calculateOrder()
         System.out.println("Minor: " + or.getMinor());
         System.out.println("Medium: " + or.getMedium());
-        System.out.println("Higher: " + or.getHigher());
+        System.out.println("Higher: " + or.getHigher());*/
         
-        System.out.println("Heuristic: " + ae.heuristic(or));
+        /*Prueba del heuristico
+        System.out.println("Heuristic: " + ae.heuristic(or));*/
         
-        ae.bestMovement(or, listZona);
+        ArrayList<BestMovement> listMovement = new ArrayList<>();
+        
+        while(ae.heuristic(or) != 0){
+            listMovement = ae.bestMovement(or, listZona, listMovement).getListBestMovement();
+            listZona = ae.bestMovement(or, listZona, listMovement).getListZona();
+            or = ae.bestMovement(or, listZona, listMovement).getOrd();
+        }
         //Este mae!!
     }
     

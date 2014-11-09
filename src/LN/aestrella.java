@@ -13,10 +13,10 @@ import java.util.ArrayList;
  * @author Cana
  */
 public class aestrella {
-    //bestMovement movement = new bestMovement();
     
-    public order calculateOrder(ArrayList<zona> listZona){
-        order order = new order();
+    //Ubica el menor, el mayor y el numero del medio de las zonas 1, 3 y 5
+    public Order calculateOrder(ArrayList<Zona> listZona){
+        Order order = new Order();
 
         order.setMinor(listZona.get(1).getPosition());
         order.setMedium(listZona.get(1).getPosition());
@@ -41,7 +41,7 @@ public class aestrella {
         return order;
     }
     
-    public int heuristic(order order){
+    public int heuristic(Order order){
         if(order.getHigher() == order.getMedium() || (order.getHigher() - order.getMedium()) < order.getMinor()){
             return order.getMinor() + ((order.getHigher() + order.getMedium() - order.getMinor())/2);
         }
@@ -50,30 +50,57 @@ public class aestrella {
         }
     }
     
-    public bestMovement bestMovement(order order, ArrayList<zona> listZona){
-        bestMovement bm = new bestMovement();
-        ArrayList<zona> listZonaTemp = (ArrayList<zona>)listZona.clone();
-        System.out.println(listZonaTemp.size());
-        System.out.println("Posicion Inicial: " + listZona.get(1).getPosition() + " " + listZona.get(3).getPosition() + " " + listZona.get(5).getPosition());
+    public void printSon(ArrayList<Zona> listZonaTemp){
+        System.out.print("Hijo: " + listZonaTemp.get(1).getPosition() + " " + listZonaTemp.get(3).getPosition() + " " + listZonaTemp.get(5).getPosition());
+        Order or = calculateOrder(listZonaTemp);
+        System.out.println(" Heuristic: " + heuristic(or));
+    }
+    
+    public void printMovementList(ArrayList<BestMovement> listMovement){
+        System.out.println("Movimientos a realizar:");
+        for(int i = 0; i < listMovement.size(); i++){
+            System.out.println("Paso " + (i+1) + ": " + "Zona:" + listMovement.get(i).getZona() + " " + "Direccion:" + listMovement.get(i).getDirection());
+        } 
+    }
+    
+    public Route bestMovement(Order order, ArrayList<Zona> listZona, ArrayList<BestMovement> listMovement){
+        Route route = new Route();
+        BestMovement bm = new BestMovement();
+        ArrayList<Zona> listZonaTemp = (ArrayList<Zona>)listZona.clone();
+        Order or = calculateOrder(listZona);
+        int actualHeuristic = heuristic(or);
+        System.out.println("Posicion Actual: " + listZona.get(1).getPosition() + " " + listZona.get(3).getPosition() + " " + listZona.get(5).getPosition());
         
         for(int i = 1; i <= 5; i++){
+
             //Mover a la izquierda
             if(i == 1){
                 listZonaTemp.get(1).setPosition(listZonaTemp.get(1).getPosition() - 1);
-                listZonaTemp.get(5).setPosition(listZonaTemp.get(5).getPosition() - 1);   
+                listZonaTemp.get(5).setPosition(listZonaTemp.get(5).getPosition() - 1);
+                Order orTemp = calculateOrder(listZonaTemp);
+                if(heuristic(orTemp) < actualHeuristic){
+                    bm.setZona(1);
+                    bm.setDirection(-1);
+                    actualHeuristic = heuristic(orTemp);
+                    route.setListBestMovement(listMovement);
+                    route.setListZona(listZonaTemp);
+                    route.setOrd(orTemp);
+                }
+                else{
+                    System.out.println("Aqui deberia de despicharze");
+                }
             }
             //listZonaTemp.get(i).setPosition(listZonaTemp.get(i).getPosition() - 1);
         }
-        ArrayList<bestMovement> listMovement = new ArrayList<>();
-        bm.setZona(1);
-        bm.setDirection(-1);
+        System.out.println("Aqui va el or");
+        System.out.println("Higher:" + or.getHigher() + "Medium:" + or.getMedium() + "Minor" + or.getMinor());
+        
+        printSon(listZonaTemp);
+        
         listMovement.add(bm);
-        System.out.println("Hijo: " + listZonaTemp.get(1).getPosition() + " " + listZonaTemp.get(3).getPosition() + " " + listZonaTemp.get(5).getPosition());
-        order or = calculateOrder(listZonaTemp);
-        System.out.println("Heuristic: " + heuristic(or));
         
-        System.out.println("Movimiento a realizar: Zona:" + listMovement.get(0).getZona() + " " + "Direccion:" + listMovement.get(0).getDirection());
+        printMovementList(listMovement);
         
-        return bm;
+        return route;
     } 
 }

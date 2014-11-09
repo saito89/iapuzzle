@@ -10,7 +10,7 @@ package EN;
  *
  * @author Cana
  */
-public class zona {
+public class Zona {
     private int position;
 
     /**
