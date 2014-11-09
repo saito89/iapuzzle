@@ -76,7 +76,7 @@ public class aestrella {
         bm.setZona(zona);
         bm.setDirection(dir);
         route.setListBestMovement(listMovement);
-        System.out.println("Candidato con Heuristic = " + heuristic(orTemp, listZonaTemp) + " fue elegido!");
+        System.out.println("Candidato con Heuristic = " + heuristic(orTemp, listZonaTemp) + " =======> ELEGIDO!!");
     }
     
     public void setChosenSon(BestMovement bm, ArrayList<Zona> listZona, ArrayList<Zona> listZonaTemp){
