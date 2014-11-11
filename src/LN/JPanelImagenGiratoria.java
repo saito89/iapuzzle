@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package figura;
+package LN;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -96,7 +96,7 @@ public class JPanelImagenGiratoria extends javax.swing.JPanel {
      * @param grados2 the grados2 to set
      */
     public void setGrados2(int grados2) {
-        this.grados2 = grados2;
+        this.grados2 += grados2;
         repaint();
     }
 
@@ -125,7 +125,9 @@ public class JPanelImagenGiratoria extends javax.swing.JPanel {
      * @param grados3 the grados3 to set
      */
     public void setGrados3(int grados3) {
-        this.grados3 = grados3;
+        //this.grados3 = grados3;
+        this.grados3 += grados3;
+        this.grados += grados3;
         repaint();
     }
 
@@ -140,7 +142,7 @@ public class JPanelImagenGiratoria extends javax.swing.JPanel {
      * @param grados4 the grados4 to set
      */
     public void setGrados4(int grados4) {
-        this.grados4 = grados4;
+        this.grados4 += grados4;
         repaint();
     }
 
@@ -212,8 +214,34 @@ public class JPanelImagenGiratoria extends javax.swing.JPanel {
      * @param grados5 the grados5 to set
      */
     public void setGrados5(int grados5) {
-        this.grados5 = grados5;
+        //this.grados5 = grados5;
+        this.grados5 += grados5;
+        this.grados3 += grados5;
         repaint();
+    }
+    
+    public void moveZone(int _zone,int _direction){
+        int degrees = _direction * 30;
+        switch(_zone){
+            case 1: 
+                setGrados(degrees);
+                break;
+            case 2: 
+                setGrados2(degrees);
+                break;
+            case 3: 
+                setGrados3(degrees);
+                break;
+            case 4: 
+                setGrados4(degrees);
+                break;
+            case 5: 
+                setGrados5(degrees);
+                break;
+            default:
+                break;
+        }
+                
     }
     
     @Override

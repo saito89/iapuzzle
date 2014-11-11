@@ -1,4 +1,5 @@
 package figura;
+import LN.JPanelImagenGiratoria;
 import EN.*;
 import LN.*;
 import java.awt.BorderLayout;
@@ -14,18 +15,18 @@ public class Figura{
     
  
     public static void main(String[] args) {
-        /*final JFrame jf = new JFrame("Prueba Imagen Giratoria");
+        final JFrame jf = new JFrame("Prueba Imagen Giratoria");
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setSize(500, 525);
  
         final JPanelImagenGiratoria ig = new JPanelImagenGiratoria();
         
-        ig.setPath("images/image.jpg");
-        ig.setPath2("images/nasa.jpg");
-        ig.setPath3("images/pringles.gif");
-        ig.setPath4("images/baseball.png");
-        ig.setPath5("images/android.png");
-        ig.setPath6("images/tennisBall.jpg");
+        ig.setPath("images/Glyph_20-Anillo1.png");
+        ig.setPath2("images/Glyph_20-Anillo2.png");
+        ig.setPath3("images/Glyph_20-Anillo3.png");
+        ig.setPath4("images/Glyph_20-Anillo4.png");
+        ig.setPath5("images/Glyph_20-Anillo5.png");
+        ig.setPath6("images/Glyph_20-Anillo6.png");
         ig.setX(0);
         ig.setY(0);
         
@@ -43,7 +44,7 @@ public class Figura{
         jf.add(jb, BorderLayout.SOUTH);
  
         jf.setLocationRelativeTo(null);
-        jf.setVisible(true);*/
+        jf.setVisible(true);
         aestrella ae = new aestrella();
         Zona z0 = new Zona();
         Zona z1 = new Zona();
