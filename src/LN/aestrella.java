@@ -29,10 +29,12 @@ public class aestrella {
                 continue;
             }
             if(listZona.get(i).getPosition() < order.getMinor()){
+                order.setMedium(order.getMinor());
                 order.setMinor(listZona.get(i).getPosition());
             }
             else{
                 if(listZona.get(i).getPosition() > order.getHigher()){
+                    order.setMedium(order.getHigher());
                     order.setHigher(listZona.get(i).getPosition());
                 }
                 else{

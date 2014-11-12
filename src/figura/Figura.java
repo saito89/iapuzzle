@@ -52,22 +52,22 @@ public class Figura{
         Zona z3 = new Zona();
         Zona z4 = new Zona();
         Zona z5 = new Zona();
-        z1.setPosition(3);
-        z2.setPosition(2);
-        z3.setPosition(4);
-        z4.setPosition(1);
-        z5.setPosition(3);
+        z1.setPosition(5);
+        z2.setPosition(0);
+        z3.setPosition(3);
+        z4.setPosition(0);
+        z5.setPosition(2);
         Zona z0temp = new Zona();
         Zona z1temp = new Zona();
         Zona z2temp = new Zona();
         Zona z3temp = new Zona();
         Zona z4temp = new Zona();
         Zona z5temp = new Zona();
-        z1temp.setPosition(3);
-        z2temp.setPosition(2);
-        z3temp.setPosition(4);
-        z4temp.setPosition(1);
-        z5temp.setPosition(3);
+        z1temp.setPosition(5);
+        z2temp.setPosition(0);
+        z3temp.setPosition(3);
+        z4temp.setPosition(0);
+        z5temp.setPosition(2);
         ArrayList<Zona> listZona = new ArrayList<>();
         listZona.add(z0);
         listZona.add(z1);
@@ -85,12 +85,11 @@ public class Figura{
         
         Order or = ae.calculateOrder(listZona);
         
-        /*
+        
         //Prueba de calculateOrder()
         System.out.println("Minor: " + or.getMinor());
         System.out.println("Medium: " + or.getMedium());
         System.out.println("Higher: " + or.getHigher());
-        */
         
         /*Prueba del heuristico
         System.out.println("Heuristic: " + ae.heuristic(or));*/
@@ -98,12 +97,16 @@ public class Figura{
         ArrayList<BestMovement> listMovement = new ArrayList<>();
         int pasos = ae.heuristic(or, listZona);
         System.out.println("PASOS NECESARIOS: " + pasos);
-
-        for(int i=0; i < pasos; i++){
+        
+        if(((listZona.get(1).getPosition() + listZona.get(3).getPosition() + listZona.get(5).getPosition()) % 2) == 0){
+            for(int i=0; i < pasos; i++){
             listMovement = ae.bestMovement(or, listZona, listZonaTemp, listMovement).getListBestMovement();
-            //listZona = ae.bestMovement(or, listZona, listMovement).getListZona();
-            //or = ae.bestMovement(or, listZona, listMovement).getOrd();
+            }
         }
+        else{
+            System.out.println("POSICION INICIAL INVALIDA!");
+        }
+        
         
         ae.printMovementList(listMovement);
         //Este mae!!
