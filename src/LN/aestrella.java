@@ -7,6 +7,7 @@
 package LN;
 import EN.*;
 import static java.lang.Math.abs;
+import static java.lang.Math.min;
 import java.util.ArrayList;
 
 /**
@@ -27,11 +28,11 @@ public class aestrella {
             if(i == 4){
                 continue;
             }
-            if(listZona.get(i).getPosition() <= order.getMinor()){
+            if(listZona.get(i).getPosition() < order.getMinor()){
                 order.setMinor(listZona.get(i).getPosition());
             }
             else{
-                if(listZona.get(i).getPosition() >= order.getMedium()){
+                if(listZona.get(i).getPosition() > order.getHigher()){
                     order.setHigher(listZona.get(i).getPosition());
                 }
                 else{
@@ -42,13 +43,26 @@ public class aestrella {
         return order;
     }
     
-    public int heuristic(Order order, ArrayList<Zona> listZona){
-        if(order.getHigher() == order.getMedium() || (order.getHigher() - order.getMedium()) < order.getMinor()){
-            return order.getMinor() + ((order.getHigher() + order.getMedium() - order.getMinor())/2) + abs(listZona.get(2).getPosition()) + abs(listZona.get(4).getPosition());
+    public int diferencia(int a, int b, int c){
+        if((a - b) > c){
+            return (a-c)-b;
         }
         else{
-            return order.getHigher() - order.getMedium() + ((order.getHigher() + order.getMedium() - order.getMinor())/2) + abs(listZona.get(2).getPosition()) + abs(listZona.get(4).getPosition());
+            return 0;
         }
+    }
+    
+    //Busca la ruta mas corta al orden original, ya sea a 0 o a 12 (la misma posicion fisicamente)
+    public int equilibrio(int a){
+        return min(a, abs(a-12));
+    }
+    
+    public int heuristic(Order order, ArrayList<Zona> listZona){
+        int menor = order.getMinor();
+        int diferencia = diferencia(order.getHigher(), order.getMedium(), order.getMinor());
+        int equilibrio = equilibrio((order.getHigher() + order.getMedium() - order.getMinor())/2);
+        //System.out.println("Menor:" + menor + "Dif:" + diferencia + "Eql:" + equilibrio);
+        return menor + diferencia + equilibrio + abs(listZona.get(2).getPosition()) + abs(listZona.get(4).getPosition());
     }
     
     public void printSon(ArrayList<Zona> listZonaTemp){
