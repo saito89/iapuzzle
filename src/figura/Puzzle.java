@@ -160,98 +160,127 @@ public class Puzzle extends javax.swing.JFrame {
             int Low = -1;
             int High = 1;
             int movimiento = randMovimiento.nextInt(High-Low) + Low;
+            if(movimiento == 0){
+                movimiento = 1;
+            }
+            System.out.println("random: " + movimiento);
             switch(zona){
                 case 1:
+                    int hola;
                     if(z1.getPosition() == 0 || movimiento <0){
                         z1.setPosition(z1.getPosition() + 1);
                         z5.setPosition(z5.getPosition() + 1);
+                        hola = 1;
                     }
                     else if(z1.getPosition() == 11 || movimiento > 0){
                          z1.setPosition(z1.getPosition() -1);
                          z5.setPosition(z5.getPosition() - 1);
+                         hola = -1;
                     }
                     else{
                         z1.setPosition(z1.getPosition() + movimiento);
                         z5.setPosition(z5.getPosition() + movimiento);
+                        hola = movimiento;
                     }      
                     Thread t6 = new Thread(new Runnable() {
                         public void run() {
-                            ig.moveZone(zona, z1.getPosition());
+                            ig.moveZone(zona, hola);
+                            System.out.println("zona: " + zona + " mover: " +hola);
                         }
                     });  
                     t6.start();
                     break;
                 case 2:
+                    int hola2;
                     if(z2.getPosition() == 0 || movimiento <0){
                         z2.setPosition(z2.getPosition() + 1);
+                        hola2 = 1;
                     }
                     else if(z2.getPosition() == 11 || movimiento > 0){
                          z2.setPosition(z2.getPosition() -1);
+                         hola2 = -1;
                     }
                     else{
                         z2.setPosition(z2.getPosition() + movimiento);
+                        hola2 = movimiento;
                     } 
                     
                      Thread t2 = new Thread(new Runnable() {
                         public void run() {
-                            ig.moveZone(zona, z2.getPosition());
+                            ig.moveZone(zona, hola2);
+                            System.out.println("zona: " + zona + " mover: " +hola2);
                         }
                     });  
                     t2.start();                   
                     break;
                 case 3:
+                    int hola3;
                     if(z3.getPosition() == 0 || movimiento <0){
                         z3.setPosition(z3.getPosition() + 1);
                         z1.setPosition(z1.getPosition() + 1);
+                        hola3 = 1;
                     }
                     else if(z3.getPosition() == 11 || movimiento > 0){
                          z3.setPosition(z3.getPosition() -1);
                          z1.setPosition(z1.getPosition() -1);
+                         hola3 = -1;
                     }
                     else{
                         z3.setPosition(z3.getPosition() + movimiento);
                         z1.setPosition(z1.getPosition() + movimiento);
+                        hola3 = movimiento;
                     }     
                      Thread t3 = new Thread(new Runnable() {
                         public void run() {
-                            ig.moveZone(zona, z3.getPosition());
+                            ig.moveZone(zona, hola3);
+                            System.out.println("zona: " + zona + " mover: " +hola3);
                         }
                     });  
                     t3.start();   
                     break;
                 case 4:
+                    int hola4;
                     if(z4.getPosition() == 0 || movimiento <0){
                         z4.setPosition(z4.getPosition() + 1);
+                        hola4 = 1;
                     }
                     else if(z4.getPosition() == 11 || movimiento > 0){
                          z4.setPosition(z4.getPosition() -1);
+                         hola4 = -1;
                     }
                     else{
                         z4.setPosition(z4.getPosition() + movimiento);
+                        hola4 = movimiento;
                     }       
                      Thread t4 = new Thread(new Runnable() {
                         public void run() {
-                            ig.moveZone(zona, z4.getPosition());
+                            ig.moveZone(zona, hola4);
+                            System.out.println("zona: " + zona + " mover: " +hola4);
                         }
                     });  
                     t4.start(); 
                     break;
                 case 5:
+                    int hola5;
                     if(z5.getPosition() == 0 || movimiento <0){
                         z5.setPosition(z5.getPosition() + 1);
                         z1.setPosition(z1.getPosition() + 1);
+                        hola5 = 1;
                     }
                     else if(z5.getPosition() == 11 || movimiento > 0){
                          z5.setPosition(z5.getPosition() -1);
                          z1.setPosition(z1.getPosition() -1);
+                         hola5 = -1;
                     }
                     else{
                         z5.setPosition(z5.getPosition() + movimiento);
                         z1.setPosition(z1.getPosition() + movimiento);
+                        hola5 = movimiento;
                     }    
                      Thread t5 = new Thread(new Runnable() {
                         public void run() {
-                            ig.moveZone(zona, z5.getPosition());
+                            ig.moveZone(zona, hola5);
+                            System.out.println("zona: " + zona + " mover: " +hola5);
                         }
                     });  
                     t5.start(); 
@@ -276,6 +305,8 @@ public class Puzzle extends javax.swing.JFrame {
         z3temp.setPosition(z3.getPosition());
         z4temp.setPosition(z4.getPosition());
         z5temp.setPosition(z5.getPosition());
+        
+        System.out.println("z0: " + z0.getPosition() + " z1: " + z1.getPosition() + ", " + z1temp.getPosition() + " z2: " + z2.getPosition() + ", " + z2temp.getPosition()+ " z3: " + z3.getPosition() + ", " + z3temp.getPosition()+ " z4: " + z4.getPosition() + ", " + z4temp.getPosition()+ " z5: " + z5.getPosition() + ", " + z5temp.getPosition() );
         ArrayList<Zona> listZona = new ArrayList<>();
         listZona.add(z0);
         listZona.add(z1);
@@ -338,6 +369,7 @@ public class Puzzle extends javax.swing.JFrame {
                             
                             final ArrayList<BestMovement> listMovementF2 = listMovementF;
                             ig.moveZone(listMovementF2.get(l).getZona(), listMovementF2.get(l).getDirection());
+                            System.out.println("zona: " + listMovementF2.get(l).getZona() + " direccion: " + listMovementF2.get(l).getDirection());
                             //ig.moveZone(1, -1);
                         }
                    });  
